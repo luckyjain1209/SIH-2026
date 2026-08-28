@@ -55,8 +55,8 @@ const COLORS = {
 ============================================================================ */
 
 const VENDOR_USER = {
-  name: "Jain Solutions Pvt. Ltd.",
-  contact: "Siya Jain, Authorized Signatory",
+  name: "HINGER Solutions Pvt. Ltd.",
+  contact: "LUCKY HINGER, Authorized Signatory",
   gstin: "27ABCDE1234F1Z5",
   pan: "ABCDE1234F",
   regNo: "U72900MH2016PTC281334",
@@ -65,7 +65,7 @@ const VENDOR_USER = {
 };
 
 const OFFICER_USER = {
-  name: "Lucky Jain",
+  name: "Lucky HINGER",
   designation: "Procurement Officer, Dept. of Electronics & IT",
   org: "Ministry of Electronics & Information Technology",
 };
@@ -181,16 +181,16 @@ const DOCS = [
   { name: "Price_Bid.pdf", type: "Price Bid" },
 ];
 
-// Deterministic, hand-authored compliance findings for TechNova's laptop bid.
+// Deterministic, hand-authored compliance findings for LUCKY's laptop bid.
 // In production this array is produced by evaluateBid() in /lib/compliance-engine
 // running deterministic rules against DocumentExtraction rows (see README).
-const TECHNOVA_FINDINGS = {
+const LUCKY_FINDINGS = {
   "REQ-T1": { status: "compliant", confidence: 98, found: "16 GB DDR5 RAM", doc: "Technical_Specification.pdf", page: 2, snippet: "System memory: 16GB DDR5, expandable to 32GB." },
   "REQ-T2": { status: "compliant", confidence: 97, found: "512 GB NVMe SSD", doc: "Technical_Specification.pdf", page: 2, snippet: "Primary storage: 512GB NVMe PCIe Gen4 SSD." },
   "REQ-T3": { status: "compliant", confidence: 94, found: "Intel Core i5, 12th Gen", doc: "Technical_Specification.pdf", page: 2, snippet: "Processor: Intel Core i5-1240P, 12th Generation." },
   "REQ-T4": { status: "compliant", confidence: 96, found: "3 years onsite warranty", doc: "Warranty_Declaration.pdf", page: 3, snippet: "The OEM warrants the product for a period of 3 years from delivery, onsite." },
   "REQ-T5": { status: "review", confidence: 71, found: "Certificate present, validity unclear", doc: "BIS_Certificate.pdf", page: 7, snippet: "BIS registration number CRS-EL-0234 issued to manufacturer; renewal date partially illegible." },
-  "REQ-T6": { status: "compliant", confidence: 95, found: "Signed OEM authorization letter", doc: "OEM_Authorization.pdf", page: 5, snippet: "We hereby authorize TechNova Solutions Pvt. Ltd. to bid on our behalf for the referenced tender." },
+  "REQ-T6": { status: "compliant", confidence: 95, found: "Signed OEM authorization letter", doc: "OEM_Authorization.pdf", page: 5, snippet: "We hereby authorize LUCKY Solutions Pvt. Ltd. to bid on our behalf for the referenced tender." },
   "REQ-E1": { status: "compliant", confidence: 99, found: "Average turnover ₹12.4 crore", doc: "Turnover_Certificate.pdf", page: 4, snippet: "Average annual turnover during the previous three financial years: ₹12.4 crore." },
   "REQ-E2": { status: "compliant", confidence: 93, found: "5 years relevant experience", doc: "Experience_Certificate.pdf", page: 6, snippet: "The bidder has supplied IT hardware to government departments continuously since 2021." },
   "REQ-E3": { status: "compliant", confidence: 100, found: "Valid GST 27ABCDE1234F1Z5", doc: "GST_Certificate.pdf", page: 1, snippet: "GSTIN: 27ABCDE1234F1Z5, registered under the CGST Act, 2017." },
@@ -200,14 +200,14 @@ const TECHNOVA_FINDINGS = {
   "REQ-F2": { status: "compliant", confidence: 100, found: "Format matches prescribed template", doc: "Financial_Statement.pdf", page: 1, snippet: "Financial bid submitted in the format prescribed under Annexure III." },
 };
 
-const BIDDERS = ["Jain Solutions Pvt. Ltd.", "Digital Infra Private Ltd.", "Global Systems & Services", "Prime Tech Distributors", "Innovative IT Solutions"];
+const BIDDERS = ["HINGER Solutions Pvt. Ltd.", "Digital Infra Private Ltd.", "Global Systems & Services", "Prime Tech Distributors", "Innovative IT Solutions"];
 
 // Simplified per-bidder outcomes for the comparison grid (subset of requirements).
 const COMPARISON_REQS = ["REQ-T1", "REQ-T2", "REQ-E1", "REQ-T5", "REQ-E2"];
 const COMPARISON_LABELS = { "REQ-T1": "RAM ≥ 16GB", "REQ-T2": "SSD ≥ 512GB", "REQ-E1": "Turnover ≥ ₹10Cr", "REQ-T5": "BIS Certificate", "REQ-E2": "Experience" };
 
 const BIDDER_RESULTS = {
-  "Jain Solutions Pvt. Ltd.": { "REQ-T1": "compliant", "REQ-T2": "compliant", "REQ-E1": "compliant", "REQ-T5": "compliant", "REQ-E2": "compliant", score: 92, missingDocs: 0, reviewItems: 0, anomalies: 0 },
+  "HINGER Solutions Pvt. Ltd.": { "REQ-T1": "compliant", "REQ-T2": "compliant", "REQ-E1": "compliant", "REQ-T5": "compliant", "REQ-E2": "compliant", score: 92, missingDocs: 0, reviewItems: 0, anomalies: 0 },
   "Digital Infra Private Ltd.": { "REQ-T1": "compliant", "REQ-T2": "compliant", "REQ-E1": "non-compliant", "REQ-T5": "review", "REQ-E2": "compliant", score: 64, missingDocs: 1, reviewItems: 1, anomalies: 0 },
   "Global Systems & Services": { "REQ-T1": "non-compliant", "REQ-T2": "compliant", "REQ-E1": "compliant", "REQ-T5": "compliant", "REQ-E2": "review", score: 78, missingDocs: 0, reviewItems: 1, anomalies: 0 },
   "Prime Tech Distributors": { "REQ-T1": "compliant", "REQ-T2": "review", "REQ-E1": "review", "REQ-T5": "compliant", "REQ-E2": "compliant", score: 70, missingDocs: 0, reviewItems: 2, anomalies: 1 },
@@ -242,8 +242,8 @@ const ANOMALIES = [
 ];
 
 const SEED_AUDIT_LOG = [
-  { id: 1, user: "System (AI Engine)", action: "Compliance check completed", tender: "TND-2026-0142", bid: "TechNova Solutions Pvt. Ltd.", detail: "13 requirements evaluated — 12 compliant, 1 needs review.", time: "28 Aug 2026, 09:12" },
-  { id: 2, user: "Rajesh Kulkarni", action: "Reviewed AI finding", tender: "TND-2026-0142", bid: "TechNova Solutions Pvt. Ltd.", detail: "Opened evidence viewer for REQ-T5 (BIS Certificate).", time: "28 Aug 2026, 10:03" },
+  { id: 1, user: "System (AI Engine)", action: "Compliance check completed", tender: "TND-2026-0142", bid: "LUCKY Solutions Pvt. Ltd.", detail: "13 requirements evaluated — 12 compliant, 1 needs review.", time: "28 Aug 2026, 09:12" },
+  { id: 2, user: "Rajesh Kulkarni", action: "Reviewed AI finding", tender: "TND-2026-0142", bid: "LUCKY Solutions Pvt. Ltd.", detail: "Opened evidence viewer for REQ-T5 (BIS Certificate).", time: "28 Aug 2026, 10:03" },
 ];
 
 const NOTIFICATIONS_SEED = [
@@ -657,7 +657,7 @@ function VendorDashboard({ setView }) {
       <Card className="p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-xl font-semibold" style={{ fontFamily: "'Space Grotesk', sans-serif", color: COLORS.navy }}>
-            Welcome back, TechNova Solutions! 👋
+            Welcome back, LUCKY Solutions! 👋
           </h1>
           <p className="text-sm text-slate-500 mt-1">Track your tenders, upload documents and ensure compliance.</p>
         </div>
@@ -980,7 +980,7 @@ function BidSubmission({ tenderId, onFinish, onBack }) {
             {aiDone && (
               <div className="mt-6 p-4 rounded-xl flex items-center justify-between" style={{ background: COLORS.bg }}>
                 <div>
-                  <p className="text-sm font-semibold text-slate-800">Pre-compliance score: {overallScore(TECHNOVA_FINDINGS)}%</p>
+                  <p className="text-sm font-semibold text-slate-800">Pre-compliance score: {overallScore(LUCKY_FINDINGS)}%</p>
                   <p className="text-xs text-slate-500 mt-0.5">12 compliant · 1 needs human review · 0 non-compliant</p>
                 </div>
                 <TrendingUp size={22} style={{ color: COLORS.green }} />
@@ -995,7 +995,7 @@ function BidSubmission({ tenderId, onFinish, onBack }) {
             </div>
             <p className="font-semibold mt-4" style={{ color: COLORS.navy }}>Ready to submit</p>
             <p className="text-sm text-slate-500 mt-1 max-w-sm mx-auto">
-              Your bid for {tender.title} will be submitted with 11 documents and a pre-compliance score of {overallScore(TECHNOVA_FINDINGS)}%.
+              Your bid for {tender.title} will be submitted with 11 documents and a pre-compliance score of {overallScore(LUCKY_FINDINGS)}%.
             </p>
           </div>
         )}
@@ -1035,7 +1035,7 @@ function BidSubmission({ tenderId, onFinish, onBack }) {
 function ComplianceReport({ role, findings, setFindings, addAudit, onBack, bidderName, tenderTitle }) {
   const [evidence, setEvidence] = useState(null);
   const score = overallScore(findings);
-  const displayBidder = bidderName || "TechNova Solutions Pvt. Ltd.";
+  const displayBidder = bidderName || "LUCKY Solutions Pvt. Ltd.";
   const displayTender = tenderTitle || "Supply of Laptops to Government Offices";
   const breakdown = [
     ["Technical Compliance", 95],
@@ -1051,7 +1051,7 @@ function ComplianceReport({ role, findings, setFindings, addAudit, onBack, bidde
       user: OFFICER_USER.name,
       action: "Overrode AI finding",
       tender: "TND-2026-0142",
-      bid: "TechNova Solutions Pvt. Ltd.",
+      bid: "LUCKY Solutions Pvt. Ltd.",
       detail: `Changed ${reqId} from "${STATUS_META[prev].label}" → "${STATUS_META[newStatus].label}". Reason: Verified original certificate manually.`,
     });
     setEvidence(null);
@@ -1334,7 +1334,7 @@ function OfficerDashboard({ setView }) {
     { name: "Pending Review", value: 9, color: COLORS.amber },
   ];
   const evals = [
-    { bidder: "TechNova Solutions Pvt. Ltd.", tender: "TND-2026-0142", score: 92, status: "review", date: "24 Aug 2026" },
+    { bidder: "LUCKY Solutions Pvt. Ltd.", tender: "TND-2026-0142", score: 92, status: "review", date: "24 Aug 2026" },
     { bidder: "Digital Infra Private Ltd.", tender: "TND-2026-0142", score: 64, status: "non-compliant", date: "24 Aug 2026" },
     { bidder: "Global Systems & Services", tender: "TND-2026-0142", score: 78, status: "review", date: "23 Aug 2026" },
     { bidder: "Innovative IT Solutions", tender: "TND-2026-0142", score: 85, status: "compliant", date: "23 Aug 2026" },
@@ -1608,7 +1608,7 @@ export default function App() {
   const [loc, setLoc] = useState(LANDING_LOC);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [notifications, setNotifications] = useState(NOTIFICATIONS_SEED);
-  const [findings, setFindings] = useState(TECHNOVA_FINDINGS);
+  const [findings, setFindings] = useState(LUCKY_FINDINGS);
   const [auditLog, setAuditLog] = useState(SEED_AUDIT_LOG);
 
   // Filter/search/tab state is lifted here (rather than living inside the
@@ -1828,7 +1828,7 @@ export default function App() {
       <div className="flex-1 flex flex-col min-w-0">
         <TopBar
           title={titleForScreen(role, loc.screen)}
-          subtitle={role === "vendor" ? "TechNova Solutions Pvt. Ltd." : OFFICER_USER.org}
+          subtitle={role === "vendor" ? "LUCKY Solutions Pvt. Ltd." : OFFICER_USER.org}
           onMenu={() => setMobileOpen(true)}
           user={role === "vendor" ? VENDOR_USER : OFFICER_USER}
           notifCount={role === "vendor" ? unreadCount : 3}
