@@ -53,7 +53,18 @@ const COLORS = {
    (Tender, TenderRequirement, Bid, ComplianceResult, Anomaly, AuditLog) so the
    UI can later be pointed at real endpoints without restructuring.
 ============================================================================ */
-
+const vendors = [
+  {
+    username: "vendor1",
+    password: "vendor123",
+    name: "Vendor 1"
+  },
+  {
+    username: "vendor2",
+    password: "vendor456",
+    name: "Vendor 2"
+  }
+];
 const VENDOR_USER = {
   name: "HINGER Solutions Pvt. Ltd.",
   contact: "LUCKY HINGER, Authorized Signatory",
@@ -472,9 +483,8 @@ function Sidebar({ role, view, setView, onSwitchRole, mobileOpen, setMobileOpen 
         <div className="fixed inset-0 bg-black/40 z-30 md:hidden" onClick={() => setMobileOpen(false)} />
       )}
       <aside
-        className={`fixed md:static z-40 top-0 left-0 h-full w-64 shrink-0 flex flex-col transition-transform duration-200 ${
-          mobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
-        }`}
+        className={`fixed md:static z-40 top-0 left-0 h-full w-64 shrink-0 flex flex-col transition-transform duration-200 ${mobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+          }`}
         style={{ background: COLORS.navy }}
       >
         <div className="px-5 h-16 flex items-center gap-2.5 border-b" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
@@ -1137,17 +1147,17 @@ function ComplianceReportsList({ role, onOpen }) {
   const items =
     role === "vendor"
       ? [
-          { id: "TND-2026-0142", title: "Supply of Laptops to Government Offices", status: "review", score: 92, date: "24 Aug 2026" },
-          { id: "TND-2026-0163", title: "Procurement of Networking Equipment", status: "compliant", score: 96, date: "18 Aug 2026" },
-          { id: "TND-2026-0104", title: "Annual Maintenance of IT Systems", status: "non-compliant", score: 54, date: "29 Jul 2026" },
-        ]
+        { id: "TND-2026-0142", title: "Supply of Laptops to Government Offices", status: "review", score: 92, date: "24 Aug 2026" },
+        { id: "TND-2026-0163", title: "Procurement of Networking Equipment", status: "compliant", score: 96, date: "18 Aug 2026" },
+        { id: "TND-2026-0104", title: "Annual Maintenance of IT Systems", status: "non-compliant", score: 54, date: "29 Jul 2026" },
+      ]
       : BIDDERS.map((b) => ({
-          id: b,
-          title: b,
-          status: BIDDER_RESULTS[b].score >= 85 ? "compliant" : BIDDER_RESULTS[b].score >= 70 ? "review" : "non-compliant",
-          score: BIDDER_RESULTS[b].score,
-          date: "24 Aug 2026",
-        }));
+        id: b,
+        title: b,
+        status: BIDDER_RESULTS[b].score >= 85 ? "compliant" : BIDDER_RESULTS[b].score >= 70 ? "review" : "non-compliant",
+        score: BIDDER_RESULTS[b].score,
+        date: "24 Aug 2026",
+      }));
   return (
     <div className="p-4 md:p-8 space-y-5">
       <div>
@@ -1599,17 +1609,139 @@ function titleForScreen(role, screen) {
   };
   return (role === "vendor" ? vendor : officer)[screen] || "Dashboard";
 }
+// tumhara existing code...
+
+
+/* YAHAN VENDOR LOGIN PASTE KARO */
+
+function VendorLogin({ onLogin, onBack }) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    const vendor = vendors.find(
+      (v) =>
+        v.username === username &&
+        v.password === password
+    );
+
+    if (vendor) {
+      setError("");
+      onLogin(vendor);
+    } else {
+      setError("Invalid username or password");
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-slate-100 flex items-center justify-center p-6">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
+
+        <h1 className="text-3xl font-bold text-slate-900 mb-2">
+          Vendor Login
+        </h1>
+
+        <p className="text-slate-500 mb-6">
+          Login to access your vendor dashboard
+        </p>
+
+        <form onSubmit={handleLogin} className="space-y-5">
+
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-2">
+              Username
+            </label>
+
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Enter username"
+              className="w-full border border-slate-300 rounded-lg px-4 py-3"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-2">
+              Password
+            </label>
+
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter password"
+              className="w-full border border-slate-300 rounded-lg px-4 py-3"
+              required
+            />
+          </div>
+
+          {error && (
+            <p className="text-red-500 text-sm">
+              {error}
+            </p>
+          )}
+
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold"
+          >
+            Login
+          </button>
+
+          <button
+            type="button"
+            onClick={onBack}
+            className="w-full border border-slate-300 py-3 rounded-lg font-semibold"
+          >
+            Back
+          </button>
+
+        </form>
+      </div>
+    </div>
+  );
+}
+
+
+/* ISKE BAAD TUMHARA EXISTING CODE */
 
 /* ============================================================================
    ROOT APP
 ============================================================================ */
 export default function App() {
   useFonts();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loggedInVendor, setLoggedInVendor] = useState(null);
+  const [loginError, setLoginError] = useState("");
   const [loc, setLoc] = useState(LANDING_LOC);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [notifications, setNotifications] = useState(NOTIFICATIONS_SEED);
   const [findings, setFindings] = useState(LUCKY_FINDINGS);
   const [auditLog, setAuditLog] = useState(SEED_AUDIT_LOG);
+
+
+  const handleVendorLogin = (e) => {
+    e.preventDefault();
+
+    const vendor = vendors.find(
+      (v) =>
+        v.username === username &&
+        v.password === password
+    );
+
+    if (vendor) {
+      setLoggedInVendor(vendor);
+      setLoginError("");
+    } else {
+      setLoginError("Invalid username or password");
+    }
+  };
 
   // Filter/search/tab state is lifted here (rather than living inside the
   // list components) specifically so it survives unmount/remount when the
@@ -1679,15 +1811,30 @@ export default function App() {
   const addAudit = useCallback((entry) => {
     setAuditLog((log) => {
       const next = [...log, { id: log.length + 1, time: "28 Aug 2026, " + new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }), ...entry }];
-      window.storage?.set?.("audit-log", JSON.stringify(next), false).catch(() => {});
+      window.storage?.set?.("audit-log", JSON.stringify(next), false).catch(() => { });
       return next;
     });
   }, []);
 
-  const enter = (r) => navigate("dashboard", {}, { role: r });
+  const enter = (r) => {
+  if (r === "vendor") {
+    navigate("vendor-login");
+  } else {
+    navigate("dashboard", {}, { role: r });
+  }
+};
   const switchRole = () => navigate("landing", {}, { role: null, replace: false });
 
-  if (!loc.role) return <Landing onEnter={enter} />;
+  if (loc.screen === "vendor-login") {
+  return (
+    <VendorLogin
+      onLogin={() => navigate("dashboard", {}, { role: "vendor" })}
+      onBack={() => navigate("landing", {}, { role: null })}
+    />
+  );
+}
+
+if (!loc.role) return <Landing onEnter={enter} />;
 
   const role = loc.role;
   const activeNavKey = navKeyForScreen(role, loc.screen);
