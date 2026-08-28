@@ -622,7 +622,7 @@ function Landing({ onEnter }) {
               Continue as Procurement Officer
             </button>
           </div>
-          <p className="mt-4 text-xs text-slate-400">No sign-up needed — this demo runs entirely on simulated data.</p>
+          
         </div>
         <Card className="p-6">
           <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-4">How it works</p>
