@@ -471,7 +471,7 @@ const VENDOR_NAV = [
   { key: "dashboard", label: "Dashboard", icon: LayoutDashboard },
   { key: "tenders", label: "My Tenders", icon: FileText },
   { key: "bids", label: "My Bids", icon: ClipboardCheck },
-  { key: "upload", label: "Upload Documents", icon: Upload },
+  // { key: "upload", label: "Upload Documents", icon: Upload },
   { key: "reports", label: "Compliance Reports", icon: FileCheck },
   { key: "notifications", label: "Notifications", icon: Bell },
   { key: "messages", label: "Messages", icon: MessageSquare },
