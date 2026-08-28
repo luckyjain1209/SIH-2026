@@ -70,6 +70,18 @@ const vendors = [
     name: "Vendor 3"
   }
 ];
+const procurementUsers = [
+  {
+    username: "Ankush Singh",
+    password: "ankush@123",
+    name: "Procurement Officer"
+  },
+  {
+    username: "procurement2",
+    password: "procure456",
+    name: "Procurement Officer 2"
+  }
+];
 const VENDOR_USER = {
   name: "LUCKY Solutions Pvt. Ltd.",
   contact: "LUCKY HINGER, Authorized Signatory",
@@ -1711,6 +1723,98 @@ function VendorLogin({ onLogin, onBack }) {
     </div>
   );
 }
+function ProcurementLogin({ onLogin, onBack }) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    const user = procurementUsers.find(
+      (u) =>
+        u.username === username &&
+        u.password === password
+    );
+
+    if (user) {
+      setError("");
+      onLogin(user);
+    } else {
+      setError("Invalid username or password");
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-slate-100 flex items-center justify-center p-6">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
+
+        <h1 className="text-3xl font-bold text-slate-900 mb-2">
+          Procurement Login
+        </h1>
+
+        <p className="text-slate-500 mb-6">
+          Login to access the procurement dashboard
+        </p>
+
+        <form onSubmit={handleLogin} className="space-y-5">
+
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-2">
+              Username
+            </label>
+
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Enter username"
+              className="w-full border border-slate-300 rounded-lg px-4 py-3"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-2">
+              Password
+            </label>
+
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter password"
+              className="w-full border border-slate-300 rounded-lg px-4 py-3"
+              required
+            />
+          </div>
+
+          {error && (
+            <p className="text-red-500 text-sm">
+              {error}
+            </p>
+          )}
+
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700"
+          >
+            Login
+          </button>
+
+          <button
+            type="button"
+            onClick={onBack}
+            className="w-full border border-slate-300 py-3 rounded-lg font-semibold"
+          >
+            Back
+          </button>
+
+        </form>
+      </div>
+    </div>
+  );
+}
 
 
 /* ISKE BAAD TUMHARA EXISTING CODE */
@@ -1824,7 +1928,11 @@ export default function App() {
   const enter = (r) => {
   if (r === "vendor") {
     navigate("vendor-login");
-  } else {
+  } 
+  else if (r === "officer") {
+    navigate("procurement-login");
+  } 
+  else {
     navigate("dashboard", {}, { role: r });
   }
 };
@@ -1838,7 +1946,18 @@ export default function App() {
     />
   );
 }
-
+  if (loc.screen === "procurement-login") {
+  return (
+    <ProcurementLogin
+      onLogin={() =>
+        navigate("dashboard", {}, { role: "officer" })
+      }
+      onBack={() =>
+        navigate("landing", {}, { role: null })
+      }
+    />
+  );
+}
 if (!loc.role) return <Landing onEnter={enter} />;
 
   const role = loc.role;
