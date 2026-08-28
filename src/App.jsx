@@ -55,14 +55,19 @@ const COLORS = {
 ============================================================================ */
 const vendors = [
   {
-    username: "vendor1",
+    username: "Lucky Solutions",
     password: "vendor123",
     name: "Vendor 1"
   },
   {
-    username: "vendor2",
+    username: "Siya Solutions",
     password: "vendor456",
     name: "Vendor 2"
+  },
+  {
+    username: "Charu Solutions",
+    password: "vendor789",
+    name: "Vendor 3"
   }
 ];
 const VENDOR_USER = {
