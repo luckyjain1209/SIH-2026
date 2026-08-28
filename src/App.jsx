@@ -71,7 +71,7 @@ const vendors = [
   }
 ];
 const VENDOR_USER = {
-  name: "HINGER Solutions Pvt. Ltd.",
+  name: "LUCKY Solutions Pvt. Ltd.",
   contact: "LUCKY HINGER, Authorized Signatory",
   gstin: "27ABCDE1234F1Z5",
   pan: "ABCDE1234F",
@@ -81,7 +81,7 @@ const VENDOR_USER = {
 };
 
 const OFFICER_USER = {
-  name: "Lucky HINGER",
+  name: "Ankush Singh",
   designation: "Procurement Officer, Dept. of Electronics & IT",
   org: "Ministry of Electronics & Information Technology",
 };
