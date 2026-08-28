@@ -484,7 +484,7 @@ const OFFICER_NAV = [
   { key: "dashboard", label: "Dashboard", icon: LayoutDashboard },
   { key: "tenders", label: "Tenders", icon: FileText },
   { key: "evaluations", label: "Bid Evaluations", icon: ClipboardCheck },
-  { key: "upload", label: "Upload Documents", icon: Upload },
+  // { key: "upload", label: "Upload Documents", icon: Upload },
   { key: "reports", label: "Compliance Reports", icon: FileCheck },
   { key: "anomalies", label: "Anomaly Alerts", icon: AlertTriangle },
   { key: "audit", label: "Audit Trail", icon: History },
